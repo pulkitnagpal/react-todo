@@ -1,6 +1,8 @@
 import React, { useState, Fragment } from 'react';
+import shortid from 'shortid';
 import Card from '../common/Card';
 import Filter from '../filter/Filter';
+
 
 const TodoCards = (props) => {
     const [openForm, setOpenForm] = useState(false);
@@ -14,6 +16,27 @@ const TodoCards = (props) => {
     const toggleFilter = () => {
         setOpenFilter(!openFilter);
     }
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const title = e.target.title.value;
+        const description = e.target.description.value;
+        if (title === '' || description === ''){
+            // handle validation error here
+        }
+        else{
+            // create object to save in todo list as default;
+            const todoObj = {
+                hash: shortid.generate(),
+                title,
+                description,
+                status: 'todo'
+            }
+            // update todo list
+            props.onAdd(todoObj);
+            // close the form
+            handleCloseForm();
+        }
+    }
     return (
         <Fragment>
             <div className="todo-wrapper">
@@ -26,15 +49,15 @@ const TodoCards = (props) => {
                         <div className="position-relative">
                             <i className="fas fa-sliders-h" onClick={toggleFilter}></i>
                             {
-                                openFilter ? <Filter/> : null
+                                openFilter ? <Filter /> : null
                             }
                         </div>
                     </div>
                 </div>
                 {
-                    [1, 2, 3, 4].map(() => {
+                    props.todoList.map((item) => {
                         return (
-                            <Card type='todo' />
+                            <Card type='todo' key={item.hash} {...item} />
                         )
                     })
                 }
@@ -50,20 +73,20 @@ const TodoCards = (props) => {
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-                                <div className="modal-body">
-                                    <form>
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" aria-describedby="emailHelp" placeholder="Enter Title" />
+                                <form onSubmit={handleSubmit}>
+                                    <div className="modal-body">
+                                        <div className="form-group">
+                                            <input type="text" className="form-control" aria-describedby="emailHelp" placeholder="Enter Title" name="title" />
                                         </div>
-                                        <div class="form-group">
-                                            <textarea class="form-control" rows="3" placeholder="Enter Description"></textarea>
+                                        <div className="form-group">
+                                            <textarea className="form-control" rows="3" placeholder="Enter Description" name="description"></textarea>
                                         </div>
-                                    </form>
-                                </div>
-                                <div className="modal-footer">
-                                    <button type="button" className="btn btn-primary">Add</button>
-                                    <button type="button" className="btn btn-secondary" onClick={handleCloseForm}>Close</button>
-                                </div>
+                                    </div>
+                                    <div className="modal-footer">
+                                        <button type="submit" className="btn btn-primary">Add</button>
+                                        <button type="button" className="btn btn-secondary" onClick={handleCloseForm}>Close</button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>

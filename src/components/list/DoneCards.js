@@ -8,9 +8,9 @@ const DoneCards = (props) => {
                 <h3>Done</h3>
             </div>
             {
-                [1,2,3,4].map(()=> {
+                props.doneList.map((item)=> {
                     return (
-                        <Card type="done"/>
+                        <Card type="done" key={item.hash} {...item}/>
                     )
                 })
             }

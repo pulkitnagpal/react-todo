@@ -1,10 +1,23 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './assets/bootstrap.min.css';
-import './assets/mystyles.css'
+import './assets/mystyles.css';
+import global from './Global';
 import TodoCards from './components/list/TodoCards';
 import DoneCards from './components/list/DoneCards';
 
 function App() {
+  const [todoList, setTodoList] = useState(global.store.getItems()['todoList'] || []);
+  const [doneList, setDoneList] = useState(global.store.getItems()['doneList'] || []);
+  const handleAdd = (item) => {
+    // add item to 'todo' list in front for recent addition
+    let updatedList = todoList;
+    updatedList.unshift(item);
+    // update local state
+    setTodoList(updatedList);
+    // update the local storage
+    global.store.updateItems(updatedList, 'todo')
+  }
+  console.log('todo', global.store.getItems()['todoList'])
   return (
     <div className="container d-flex justify-content-center">
       <div style={{marginTop: '2rem'}}>
@@ -13,10 +26,10 @@ function App() {
         <hr className="my-4"/>
         <div className="row">
           <div className="col-md-6">
-            <TodoCards/>
+            <TodoCards todoList={todoList} onAdd={handleAdd}/>
           </div>
           <div className="col-md-6">
-            <DoneCards/>
+            <DoneCards doneList={doneList}/>
           </div>
         </div>
       </div>
