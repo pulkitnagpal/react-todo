@@ -12,8 +12,8 @@ const Filter = () => {
                 </div>
                 <div className="modal-body">
                     <form>
-                        <div class="form-group">
-                            <input type="text" class="form-control" aria-describedby="emailHelp" placeholder="Search by Tags" />
+                        <div className="form-group">
+                            <input type="text" className="form-control" aria-describedby="emailHelp" placeholder="Search by Tags" />
                         </div>
                     </form>
                 </div>

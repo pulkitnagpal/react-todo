@@ -2,7 +2,8 @@ import React, { useState, Fragment } from 'react';
 import shortid from 'shortid';
 import Card from '../common/Card';
 import Filter from '../filter/Filter';
-
+import {extractTags} from '../../helpers/methods';
+import global from '../../Global';
 
 const TodoCards = (props) => {
     const [openForm, setOpenForm] = useState(false);
@@ -25,11 +26,18 @@ const TodoCards = (props) => {
         }
         else{
             // create object to save in todo list as default;
+            const hash = shortid.generate();
+            // update tags dictionary in local storage
+            const tagList = extractTags(title + ' ' + description);
+            tagList.forEach((tag)=> {
+                global.store.updateTags(tag, hash)
+            })
             const todoObj = {
-                hash: shortid.generate(),
+                hash,
                 title,
                 description,
-                status: 'todo'
+                status: 'todo',
+                tagList
             }
             // update todo list
             props.onAdd(todoObj);

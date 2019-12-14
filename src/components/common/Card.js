@@ -7,17 +7,32 @@ const Card = (props) => {
         const prevState = hover
         setHover(!prevState);
     }
-    const { type } = props;
+    const { type, title, description, tagList } = props;
+    const linkedText = (text) => {
+        const words = text.split(" ");
+        return words.map((word) => {
+            if (word[0] === '#'){
+                return (
+                    <span><a href="#">{word + ' '}</a></span>
+                )
+            }
+            else{
+                return (
+                    <span>{word + ' '}</span>
+                )
+            }
+        })
+    }
     return (
         <div className={`card border-${type === 'todo' ? 'secondary' : 'success'} mb-3`} onMouseEnter={toggleActionIcons} onMouseLeave={toggleActionIcons}>
-            <div className="card-header">Header</div>
+            <div className="card-header">{linkedText(title)}</div>
             <div className="card-body">
-                <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <div className="d-flex justify-content-between">
+                <p className="card-text">{linkedText(description)}</p>
+                <div className="d-flex">
                     {
-                        [1, 2, 3, 4].map(() => {
+                        tagList.map((tag) => {
                             return (
-                                <Tag />
+                                <Tag value={tag}/>
                             )
                         })
                     }

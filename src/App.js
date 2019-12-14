@@ -17,7 +17,6 @@ function App() {
     // update the local storage
     global.store.updateItems(updatedList, 'todo')
   }
-  console.log('todo', global.store.getItems()['todoList'])
   return (
     <div className="container d-flex justify-content-center">
       <div style={{marginTop: '2rem'}}>
