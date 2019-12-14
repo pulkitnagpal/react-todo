@@ -1,21 +1,16 @@
 import React, { useState, Fragment } from 'react';
 import shortid from 'shortid';
 import Card from '../common/Card';
-import Filter from '../filter/Filter';
 import {extractTags} from '../../helpers/methods';
 import global from '../../Global';
 
 const TodoCards = (props) => {
     const [openForm, setOpenForm] = useState(false);
-    const [openFilter, setOpenFilter] = useState(false);
     const handleOpenForm = () => {
         setOpenForm(true)
     }
     const handleCloseForm = () => {
         setOpenForm(false)
-    }
-    const toggleFilter = () => {
-        setOpenFilter(!openFilter);
     }
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -52,14 +47,6 @@ const TodoCards = (props) => {
                     <div className="d-flex align-items-center">
                         <h3>To Do</h3>
                         <span onClick={handleOpenForm}><i className="fas fa-plus-circle add-icon" style={{ marginLeft: 10 }}></i></span>
-                    </div>
-                    <div className="icon-wrapper">
-                        <div className="position-relative">
-                            <i className="fas fa-sliders-h" onClick={toggleFilter}></i>
-                            {
-                                openFilter ? <Filter /> : null
-                            }
-                        </div>
                     </div>
                 </div>
                 {

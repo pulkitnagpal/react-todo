@@ -39,14 +39,11 @@ const Card = (props) => {
                 </div>
 
             </div>
+            <div className="do-action-wrapper" style={hover && type === 'todo' ? {transform: 'translate(0%)'}: null}>
             {
-                hover && type === 'todo' ? (
-                    <div className="todo-overlay">
-                        <i class="fas fa-check-circle"></i>
-                    </div>
-                ) : null
+                hover && type === 'todo' ? 'DO IT' : null
             }
-
+            </div>
         </div>
     )
 }
