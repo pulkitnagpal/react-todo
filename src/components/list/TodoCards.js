@@ -52,7 +52,7 @@ const TodoCards = (props) => {
                 {
                     props.todoList.map((item) => {
                         return (
-                            <Card type='todo' key={item.hash} {...item} />
+                            <Card type='todo' key={item.hash} {...item} onDone={(hash)=> {props.onDone(hash)}}/>
                         )
                     })
                 }

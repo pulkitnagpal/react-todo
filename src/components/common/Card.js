@@ -7,7 +7,7 @@ const Card = (props) => {
         const prevState = hover
         setHover(!prevState);
     }
-    const { type, title, description, tagList } = props;
+    const { type, title, description, tagList, hash } = props;
     const linkedText = (text) => {
         const words = text.split(" ");
         return words.map((word) => {
@@ -23,8 +23,13 @@ const Card = (props) => {
             }
         })
     }
+    const handleDone = () => {
+        if (type === 'todo'){
+            props.onDone(hash)
+        }
+    }
     return (
-        <div className={`card border-${type === 'todo' ? 'secondary' : 'success'} mb-3`} onMouseEnter={toggleActionIcons} onMouseLeave={toggleActionIcons}>
+        <div className={`card border-${type === 'todo' ? 'secondary' : 'success'} mb-3`} onMouseEnter={toggleActionIcons} onMouseLeave={toggleActionIcons} onClick={handleDone}>
             <div className="card-header">{linkedText(title)}</div>
             <div className="card-body">
                 <p className="card-text">{linkedText(description)}</p>

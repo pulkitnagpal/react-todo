@@ -17,6 +17,22 @@ function App() {
     // update the local storage
     global.store.updateItems(updatedList, 'todo')
   }
+  const handleDone = (hash) => {
+    // find item in todo list
+    const index = todoList.findIndex((item)=> item.hash === hash);
+    // add to done list
+    let updatedDone = Object.assign([], doneList);
+    updatedDone.unshift(todoList[index]);
+    // update done list state;
+    setDoneList(updatedDone);
+    // update the local storage
+    global.store.updateItems(updatedDone, 'done');
+    // splice the todo list
+    let updatedTodo =Object.assign([], todoList);
+    updatedTodo.splice(index, 1);
+    setTodoList(updatedTodo);
+    global.store.updateItems(updatedTodo, 'todo');
+  }
   return (
     <div className="container d-flex justify-content-center">
       <div style={{marginTop: '2rem'}}>
@@ -25,7 +41,7 @@ function App() {
         <hr className="my-4"/>
         <div className="row">
           <div className="col-md-6">
-            <TodoCards todoList={todoList} onAdd={handleAdd}/>
+            <TodoCards todoList={todoList} onAdd={handleAdd} onDone={handleDone}/>
           </div>
           <div className="col-md-6">
             <DoneCards doneList={doneList}/>
