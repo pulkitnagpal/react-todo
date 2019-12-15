@@ -3,9 +3,11 @@ import Tag from './Tag';
 
 const Card = (props) => {
     const [hover, setHover] = useState(false);
-    const toggleActionIcons = () => {
-        const prevState = hover
-        setHover(!prevState);
+    const openAction = () => {
+        setHover(true);
+    }
+    const closeAction = () => {
+        setHover(false)
     }
     const { type, title, description, tagList, hash } = props;
     const linkedText = (text) => {
@@ -33,7 +35,7 @@ const Card = (props) => {
         }
     }
     return (
-        <div className={`card border-${type === 'todo' ? 'secondary' : 'success'} mb-3`} onMouseEnter={toggleActionIcons} onMouseLeave={toggleActionIcons} onClick={handleDone}>
+        <div className={`card border-${type === 'todo' ? 'secondary' : 'success'} mb-3`} onMouseEnter={openAction} onMouseLeave={closeAction} onClick={handleDone}>
             <div className="card-header">{linkedText(title)}</div>
             <div className="card-body">
                 <p className="card-text">{linkedText(description)}</p>

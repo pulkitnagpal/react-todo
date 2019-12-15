@@ -40,6 +40,7 @@ const TodoCards = (props) => {
             handleCloseForm();
         }
     }
+    const {todoList} = props
     return (
         <Fragment>
             <div className="todo-wrapper">
@@ -50,11 +51,17 @@ const TodoCards = (props) => {
                     </div>
                 </div>
                 {
-                    props.todoList.map((item) => {
+                    todoList.map((item) => {
                         return (
                             <Card type='todo' key={item.hash} {...item} onDone={(hash)=> {props.onDone(hash)}} onFilter={(tag)=> {props.onFilter(tag)}}/>
                         )
                     })
+                }
+                {
+                    // to have a placeholder in case no card is there
+                    todoList.length < 1 ? (
+                        <div className="empty-placeholder">Nothing to DO for now.</div>
+                    ): null
                 }
             </div>
             {
@@ -74,11 +81,11 @@ const TodoCards = (props) => {
                                             <input type="text" className="form-control" aria-describedby="emailHelp" placeholder="Enter Title" name="title" required/>
                                         </div>
                                         <div className="form-group">
-                                            <textarea className="form-control" rows="3" placeholder="Enter Description" name="description" required></textarea>
+                                            <input className="form-control" placeholder="Enter Description" name="description" required/>
                                         </div>
                                     </div>
                                     <div className="modal-footer">
-                                        <button type="submit" className="btn btn-primary">Add</button>
+                                        <input type="submit" className="btn btn-primary" value='Add'/>
                                         <button type="button" className="btn btn-secondary" onClick={handleCloseForm}>Close</button>
                                     </div>
                                 </form>

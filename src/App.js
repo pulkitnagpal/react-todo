@@ -66,10 +66,19 @@ function App() {
     setSelectedTags(newTagList);
     global.store.setSelectedTags(newTagList)
   }
+  const handleReset = () => {
+    global.store.resetStore();
+    setTodoList([]);
+    setDoneList([]);
+    setSelectedTags([]);
+  }
   return (
     <div className="container d-flex justify-content-center">
       <div style={{marginTop: '2rem'}}>
-        <h1 className="display-3">ToDo List</h1>
+        <div className='d-flex align-items-center justify-content-between'>
+          <h1 className="display-3">ToDo List</h1>
+          <button type="button" class="btn btn-primary btn-lg" onClick={handleReset}>RESET APP</button>
+        </div>
         <p className="lead">This is a simple utility app for adding daily todo tasks and mark as done when completed</p>
         <hr className="my-4"/>
         <Filter selectedTags={selectedTags} onRemove={(tag)=> {handleChangeFilter(tag, 'remove')}}/>

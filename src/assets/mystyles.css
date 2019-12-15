@@ -65,3 +65,11 @@
 .remove-filter:hover{
     color: darkgreen;
 }
+
+.empty-placeholder {
+    display: flex;
+    align-items: center;
+    height: 200px;
+    font-size: 1.5rem;
+    color: #80808091;
+}   

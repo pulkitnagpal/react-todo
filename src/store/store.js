@@ -43,6 +43,9 @@ const store = {
             }
         }
         window.localStorage.setItem('tags', JSON.stringify(tagHashMap))
+    },
+    resetStore(){
+        window.localStorage.clear();
     }
 }
 
