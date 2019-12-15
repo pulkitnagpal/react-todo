@@ -52,7 +52,11 @@ function App() {
     let updatedTodo =Object.assign([], todoList);
     updatedTodo.splice(index, 1);
     setTodoList(updatedTodo);
-    global.store.updateItems(updatedTodo, 'todo');
+    // update delete in local storage
+    const todoStoreList = todoStore();
+    const indexInStore = todoStoreList.findIndex((item)=> item.hash === hash);
+    todoStoreList.splice(indexInStore,1)
+    global.store.updateItems(todoStoreList, 'todo');
   }
   const handleChangeFilter = (tag, action) => {
     const newTagList = Object.assign([], selectedTags);
