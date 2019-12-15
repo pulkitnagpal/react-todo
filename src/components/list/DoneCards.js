@@ -10,7 +10,7 @@ const DoneCards = (props) => {
             {
                 props.doneList.map((item)=> {
                     return (
-                        <Card type="done" key={item.hash} {...item}/>
+                        <Card type="done" key={item.hash} {...item} onFilter={(tag)=> {props.onFilter(tag)}}/>
                     )
                 })
             }

@@ -1,9 +1,10 @@
 const store = {
     // getItems from local storage
     getItems(){
-      const todoList = JSON.parse(window.localStorage.getItem('todo'))
+      const todoList = JSON.parse(window.localStorage.getItem('todo'));
       const doneList = JSON.parse(window.localStorage.getItem('done'));
-      return {todoList, doneList}
+      const selectedTags = JSON.parse(window.localStorage.getItem('selectedTags'));
+      return {todoList, doneList, selectedTags}
     },
     // update local storage based on item's status
     updateItems(newList, type){
@@ -14,9 +15,17 @@ const store = {
             window.localStorage.setItem('done', JSON.stringify(newList))
         }
     },
+    setSelectedTags(newTag){
+        const updatedTagList = JSON.parse(window.localStorage.getItem('selectedTags')) || [];
+        updatedTagList.push(newTag);
+        window.localStorage.setItem('selectedTags',JSON.stringify(updatedTagList));
+    },
+    getTags(){
+        return JSON.parse(window.localStorage.getItem('tags'));
+    },
     // update tag hashmap
     updateTags(tagname, itemhash){
-        let tagHashMap = JSON.parse(window.localStorage.getItem('tag'));
+        let tagHashMap = JSON.parse(window.localStorage.getItem('tags'));
         if (tagHashMap){
             if (tagHashMap[tagname]){
                 // simply add new item hash corresponsing to the tag name
@@ -35,7 +44,7 @@ const store = {
                 [tagname] : [itemhash]
             }
         }
-        window.localStorage.setItem('tag', JSON.stringify(tagHashMap))
+        window.localStorage.setItem('tags', JSON.stringify(tagHashMap))
     }
 }
 

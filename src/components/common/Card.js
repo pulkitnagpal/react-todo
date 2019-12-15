@@ -11,12 +11,16 @@ const Card = (props) => {
     const linkedText = (text) => {
         const words = text.split(" ");
         return words.map((word) => {
-            if (word[0] === '#'){
+            if (word[0] === '#') {
                 return (
-                    <span><a href="#">{word + ' '}</a></span>
+                    <span><a href="#" onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        props.onFilter(word)
+                    }}>{word + ' '}</a></span>
                 )
             }
-            else{
+            else {
                 return (
                     <span>{word + ' '}</span>
                 )
@@ -24,7 +28,7 @@ const Card = (props) => {
         })
     }
     const handleDone = () => {
-        if (type === 'todo'){
+        if (type === 'todo') {
             props.onDone(hash)
         }
     }
@@ -37,17 +41,17 @@ const Card = (props) => {
                     {
                         tagList.map((tag) => {
                             return (
-                                <Tag value={tag}/>
+                                <Tag value={tag} />
                             )
                         })
                     }
                 </div>
 
             </div>
-            <div className="do-action-wrapper" style={hover && type === 'todo' ? {transform: 'translate(0%)'}: null}>
-            {
-                hover && type === 'todo' ? 'DO IT' : null
-            }
+            <div className="do-action-wrapper" style={hover && type === 'todo' ? { transform: 'translate(0%)' } : null}>
+                {
+                    hover && type === 'todo' ? 'DO IT' : null
+                }
             </div>
         </div>
     )
