@@ -71,10 +71,10 @@ const TodoCards = (props) => {
                                 <form onSubmit={handleSubmit}>
                                     <div className="modal-body">
                                         <div className="form-group">
-                                            <input type="text" className="form-control" aria-describedby="emailHelp" placeholder="Enter Title" name="title" />
+                                            <input type="text" className="form-control" aria-describedby="emailHelp" placeholder="Enter Title" name="title" required/>
                                         </div>
                                         <div className="form-group">
-                                            <textarea className="form-control" rows="3" placeholder="Enter Description" name="description"></textarea>
+                                            <textarea className="form-control" rows="3" placeholder="Enter Description" name="description" required></textarea>
                                         </div>
                                     </div>
                                     <div className="modal-footer">

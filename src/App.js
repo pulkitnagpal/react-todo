@@ -7,24 +7,26 @@ import DoneCards from './components/list/DoneCards';
 import Filter from './components/filter/Filter';
 import {filterWithTags} from './helpers/methods';
 
+const todoStore = () => global.store.getItems()['todoList'] || [];
+const doneStore = () => global.store.getItems()['doneList'] || [];
 function App() {
-  const [todoList, setTodoList] = useState(global.store.getItems()['todoList'] || []);
-  const [doneList, setDoneList] = useState(global.store.getItems()['doneList'] || []);
+  const [todoList, setTodoList] = useState(todoStore());
+  const [doneList, setDoneList] = useState(doneStore());
   const [selectedTags, setSelectedTags] = useState(global.store.getItems()['selectedTags'] || []);
   useEffect(()=> {
     // filter the lists with tags from local storage
     if (selectedTags.length > 0) {
       // filter the items in todo and done list from tags;
-      const filteredTodo = filterWithTags(todoList, selectedTags);
-      const filteredDone = filterWithTags(doneList, selectedTags);
+      const filteredTodo = filterWithTags(todoStore(), selectedTags);
+      const filteredDone = filterWithTags(doneStore(), selectedTags);
       // update the items according to the tags selected or previous local storage state
       setTodoList(filteredTodo);
       setDoneList(filteredDone);
     }
     else{
       // if nothing is selected show all the saved todos and dones
-      setTodoList(global.store.getItems()['todoList'] || []);
-      setDoneList(global.store.getItems()['doneList'] || []);
+      setTodoList(todoStore());
+      setDoneList(doneStore());
     }
   }, [selectedTags])
   const handleAdd = (item) => {
@@ -52,13 +54,17 @@ function App() {
     setTodoList(updatedTodo);
     global.store.updateItems(updatedTodo, 'todo');
   }
-  const handleFilter = (tag) => {
-    // logic to filter the lists from tag entered
+  const handleChangeFilter = (tag, action) => {
     const newTagList = Object.assign([], selectedTags);
-    newTagList.push(tag)
+    if (action === 'add'){
+      newTagList.push(tag)
+    }
+    else if (action === 'remove'){
+      const index = newTagList.findIndex((tagItem)=> tagItem === tag);
+      newTagList.splice(index,1);
+    }
     setSelectedTags(newTagList);
-    // update selected tags in local storage
-    global.store.setSelectedTags(tag);
+    global.store.setSelectedTags(newTagList)
   }
   return (
     <div className="container d-flex justify-content-center">
@@ -66,13 +72,13 @@ function App() {
         <h1 className="display-3">ToDo List</h1>
         <p className="lead">This is a simple utility app for adding daily todo tasks and mark as done when completed</p>
         <hr className="my-4"/>
-        <Filter selectedTags={selectedTags}/>
+        <Filter selectedTags={selectedTags} onRemove={(tag)=> {handleChangeFilter(tag, 'remove')}}/>
         <div className="row">
           <div className="col-md-6">
-            <TodoCards todoList={todoList} onAdd={handleAdd} onDone={handleDone} onFilter={handleFilter}/>
+            <TodoCards todoList={todoList} onAdd={handleAdd} onDone={handleDone} onFilter={(tag)=> {handleChangeFilter(tag, 'add')}}/>
           </div>
           <div className="col-md-6">
-            <DoneCards doneList={doneList} onFilter={handleFilter}/>
+            <DoneCards doneList={doneList} onFilter={(tag)=> {handleChangeFilter(tag, 'add')}}/>
           </div>
         </div>
       </div>

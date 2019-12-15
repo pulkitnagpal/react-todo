@@ -15,10 +15,8 @@ const store = {
             window.localStorage.setItem('done', JSON.stringify(newList))
         }
     },
-    setSelectedTags(newTag){
-        const updatedTagList = JSON.parse(window.localStorage.getItem('selectedTags')) || [];
-        updatedTagList.push(newTag);
-        window.localStorage.setItem('selectedTags',JSON.stringify(updatedTagList));
+    setSelectedTags(newTagList){
+        window.localStorage.setItem('selectedTags',JSON.stringify(newTagList));
     },
     getTags(){
         return JSON.parse(window.localStorage.getItem('tags'));

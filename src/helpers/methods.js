@@ -6,16 +6,13 @@ export const extractTags = (str) => {
 export const filterWithTags = (list, selectedtags) => {
     const tagMap = global.store.getTags();
     let updatedList = [];
-    for (let i=0; i<selectedtags.length; i++){
-        const tag = selectedtags[i];
-        const hashItemList = tagMap[tag];
-        for (let j=0; j<hashItemList.length; j++){
-            const itemhash = hashItemList[j];
-            const item = list.find((listItem) => listItem.hash === itemhash);
-            if (item){
-                updatedList.push(item)
-            }
-        }
+    let commonListHash = [];
+    commonListHash = tagMap[selectedtags[0]];
+    for(let i=1; i<selectedtags.length; i++){
+        const arr2 = tagMap[selectedtags[i]];
+        commonListHash = arr2.filter((value) => commonListHash.indexOf(value) !== -1);
     }
+    updatedList = list.filter((value) => commonListHash.indexOf(value.hash) !== -1);
+    // update the item list and return
     return updatedList;
 }   

@@ -6,10 +6,10 @@ const styles = {
         marginRight: 10
     }
 }
-const ListTags = (props) => {
+const Tag = (props) => {
     return (
-        <span class="badge badge-pill badge-primary" style={styles.tag}>{props.value}</span>
+        <span className="badge badge-pill badge-primary" style={styles.tag}>{props.value}</span>
     )
 }
 
-export default ListTags;
+export default Tag;
