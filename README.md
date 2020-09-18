@@ -1,6 +1,3 @@
-## Run this app on https://o4s-react-assignment.herokuapp.com/
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
 ## Available Scripts
 
 In the project directory, you can run:
